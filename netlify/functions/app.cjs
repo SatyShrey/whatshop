@@ -13,8 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const secret = process.env.secret;
 const mongodb_url = process.env.mongodb_url
-//connect to mongodb
-mongoose.connect(mongodb_url).catch((e) => console.log(e));
+
 const userSchema = new mongoose.Schema({
   name: String,
   email: String,
@@ -30,6 +29,7 @@ app.get('/api', (req, res) => {
 
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
+  await mongoose.connect(mongodb_url);
   const user = await User.findOne({ email });
   if (!user) { return res.send("Invalid credentials") }
   const correctPassword = await bcrypt.compare(password, user.password)
@@ -38,13 +38,14 @@ app.post('/api/login', async (req, res) => {
   const token = jwt.sign(logUser, secret, { expiresIn: "30d" })
 
   res.cookie("hiUser", token, {
-    httpOnly: true, secret: true, maxAge: 30 * 24 * 60 * 60 * 1000
+    httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000
   })
   res.send({ email: user.email, name: user.name });
 })
 
 app.post('/api/signup', async (req, res) => {
   const { name, email, password } = req.body;
+  mongoose.connect(mongodb_url)
   const user = await User.findOne({ email });
   if (user) { return res.send("User already exists") }
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -59,6 +60,7 @@ app.get("/api/start", async (req, res) => {
     const token = req.cookies.hiUser;
   const decoded = jwt.verify(token, secret);
   const user = decoded;
+  mongoose.connect(mongodb_url)
   const users=await User.find({email:{$ne:user.email}});
   users.forEach(a=>a.password='1')
   res.send({user,users})
