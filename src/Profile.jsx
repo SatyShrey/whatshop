@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useValues } from "./GlobalContexts"
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 export default function Profile() {
     const { user,setuser,setusers,Loader } = useValues();
@@ -21,6 +22,7 @@ export default function Profile() {
     }
 
     return (
+        <><Header/>
         <div className="p-2 my-10">
             <div className="p-2 w-fit rounded-2xl shadow border border-base-300 m-auto text-center">
                 <p className="text-2xl font-bold">{user.name}</p>
@@ -28,5 +30,6 @@ export default function Profile() {
                 <button onClick={logout} className="btn">Logout</button>
             </div>
         </div>
+        </>
     )
 }

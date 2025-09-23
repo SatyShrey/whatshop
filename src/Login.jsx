@@ -2,6 +2,7 @@ import axios from "axios";
 import {  useState } from "react";
 import { useValues } from "./GlobalContexts";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 export default function Login() {
     const { setuser, Loader, user } = useValues()
@@ -20,6 +21,7 @@ export default function Login() {
     }
 
     return (
+        <><Header/>
         <div style={{ scrollbarWidth: "none" }} className="mt-8 max-w-md w-full m-auto flex-1 overflow-y-scroll">
             <form onSubmit={handleSubmit} className="flex flex-col gap-3 m-2 p-2 rounded bg-base-200">
                 <h2 className="text-center text-2xl text-primary font-bold">User Login</h2>
@@ -29,5 +31,6 @@ export default function Login() {
                 <button onClick={()=>{navigate('/signup')}} className="btn btn-link" type="reset">Go to signup</button>
             </form>
         </div>
+        </>
     )
 }

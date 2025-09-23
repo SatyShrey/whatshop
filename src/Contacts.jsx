@@ -1,14 +1,15 @@
 import { BiUser } from "react-icons/bi"
 import { useValues } from "./GlobalContexts"
 import { useNavigate, } from "react-router-dom";
+import Header from "./Header";
 
 export default function Contacts() {
     const { setreceiver, receiver, users } = useValues();
-    const contactsList = ["satyaxyz31@gmail.com", 'satya@gmail.com', 'kari@gmail.com'];
     const navigate = useNavigate()
 
     return (
         <div className='relative h-full flex-1 not-md:w-full p-2 flex flex-col md:border-r border-base-300'>
+            <Header/>
             <div className="h-12 mb-2">
                 <input placeholder="Search..." type="text" className="h-full w-full rounded-full px-4 shadow-[0_0_2px] placeholder:text-gray-400 outline-none bg-base-200" />
             </div>

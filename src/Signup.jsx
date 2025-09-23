@@ -2,6 +2,7 @@ import axios from "axios";
 import {  useState } from "react";
 import { useValues } from "./GlobalContexts";
 import { useNavigate } from "react-router-dom";
+import Header from "./Header";
 
 export default function Signup() {
     const [name, setname] = useState('');
@@ -21,6 +22,7 @@ export default function Signup() {
         }).catch(e=>{alert(e.message);Loader()})
     }
   return(
+    <><Header/>
     <div style={{scrollbarWidth:"none"}} className="mt-8 max-w-md w-full m-auto flex-1 overflow-y-scroll">
         <form onSubmit={handleSubmit} className="flex flex-col gap-3 m-2 p-2 rounded bg-base-200">
             <h2 className="text-center text-2xl text-primary font-bold">User Registration</h2>
@@ -35,6 +37,7 @@ export default function Signup() {
             <button onClick={()=>{navigate('/login')}} className="btn btn-link" type="reset">Go to login</button>
         </form>
     </div>
+    </>
   )
 }
 

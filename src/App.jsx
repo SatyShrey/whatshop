@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Contents from "./Contents";
-import Header from "./Header";
 import Signup from "./Signup";
 import Protected from "./Protected";
 import Chatting from "./Chatting";
@@ -11,7 +10,6 @@ import Login from "./Login";
 export default function App() {
   return (
     <div className="shadow-[0_0_2px] h-dvh font-[Poppins] flex flex-col overflow-hidden">
-      <Header />
          <Routes>
             <Route path="/" element={<Protected><Contents/></Protected>}/>
             <Route path="/signup" element={<Signup/>}/>
