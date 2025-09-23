@@ -15,7 +15,7 @@ export default function App() {
             <Route path="/signup" element={<Signup/>}/>
             <Route path="/login" element={<Login/>}/>
             <Route path="/chats" element={<Protected><Chatting/></Protected>}/>
-            <Route path="/profile" element={<Protected><Profile/></Protected>}/>
+            <Route path="/profile" element={<Profile/>}/>
          </Routes>
       <Modal/>
     </div>

@@ -10,14 +10,12 @@ export default function Header() {
   return (
     <div className='navbar'>
       <h1 className='navbar-start font-bold text-2xl px-1'>WhatShop</h1>
-      <div className="navbar-center">
-        <ThemeController/>
-      </div>
+     
       <div className='navbar-end'>
-        {user && <button onClick={()=>navigate('/profile')}
+        <button onClick={()=>navigate('/profile')}
         className="font-bold text-2xl bg-base-100 h-12 cursor-pointer px-1">
           <MdMenu size={30}/>
-        </button>}
+        </button>
       </div>
     </div>
   )
