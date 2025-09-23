@@ -30,8 +30,8 @@ export function GlobalProvider({ children }) {
         socket.current = io(socketurl, { withCredentials: true, query: { email: user.email } });
         socket.current.on('receive_message', (newChat) => {
           setchats((prev) => [...prev, newChat]);
-          const localChats = localStorage.getItem('chats') || [];
-          const newLocalChats = JSON.parse(localChats);
+          const localChats = localStorage.getItem('chats')
+          const newLocalChats =localChats ? JSON.parse(localChats) : []
           localStorage.setItem('chats', JSON.stringify([...newLocalChats, newChat]));
         })
       }

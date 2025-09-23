@@ -19,8 +19,8 @@ export default function Chatting() {
     const newChat = { text: chat, receiver: receiver.email, sender: user.email }
     socket.current.emit('send_message', newChat)
     setchats((prev) => [...prev, newChat]);
-    const localChats=localStorage.getItem('chats') || [];
-    const newLocalChats=JSON.parse(localChats);
+    const localChats=localStorage.getItem('chats')
+          const newLocalChats =localChats ? JSON.parse(localChats) : []
     localStorage.setItem('chats',JSON.stringify([...newLocalChats,newChat]));
     setchat('');
     bottomRef.current.scrollIntoView({ behavior: "smooth" });

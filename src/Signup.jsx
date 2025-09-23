@@ -31,7 +31,7 @@ export default function Signup() {
             <input onChange={(e)=>setpassword(e.target.value)} value={password} className="h-11 bg-base-100 placeholder:text-gray-400 px-2 outline-none border rounded" 
             placeholder="Password" type="password" />
             <input onChange={(e)=>setcpassword(e.target.value)} value={cpassword} className="h-11 bg-base-100 placeholder:text-gray-400 px-2 outline-none border rounded" placeholder="Confirm password" type="password" />
-            <button type="submit" className="btn btn-primary">Sihnup</button>
+            <button type="submit" className="btn btn-primary">Signup</button>
             <button onClick={()=>{navigate('/login')}} className="btn btn-link" type="reset">Go to login</button>
         </form>
     </div>
