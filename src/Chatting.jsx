@@ -23,7 +23,9 @@ export default function Chatting() {
           const newLocalChats =localChats ? JSON.parse(localChats) : []
     localStorage.setItem('chats',JSON.stringify([...newLocalChats,newChat]));
     setchat('');
-    bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    setTimeout(()=>{
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    },100)
   }
 
   return (
