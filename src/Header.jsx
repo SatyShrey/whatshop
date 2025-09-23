@@ -1,9 +1,11 @@
 import { useValues } from "./GlobalContexts";
 import { MdMenu } from "react-icons/md";
 import ThemeController from "./ThemeController";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const { user } = useValues();
+  const navigate=useNavigate()
 
   return (
     <div className='navbar'>
@@ -12,10 +14,10 @@ export default function Header() {
         <ThemeController/>
       </div>
       <div className='navbar-end'>
-        {user && <a href="/profile"
+        {user && <button onClick={()=>navigate('/profile')}
         className="font-bold text-2xl bg-base-100 h-12 cursor-pointer px-3">
           <MdMenu size={30}/>
-        </a>}
+        </button>}
       </div>
     </div>
   )
