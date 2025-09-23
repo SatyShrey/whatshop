@@ -15,7 +15,7 @@ export default function Login() {
         axios.post("/api/login", { email, password }, { withCredentials: true }).then((data) => {
             Loader()
             if (data.data === "Invalid credentials") { return alert(data.data) }
-            setuser(data.data); navigate('/')
+            setuser(data.data); navigate('/'); location.reload();
         }).catch(e => { Loader(); alert(e.message) })
     }
 

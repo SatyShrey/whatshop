@@ -14,7 +14,7 @@ export default function Contacts() {
             </div>
 
             <div style={{ scrollbarWidth: "none" }} className='flex-1 overflow-y-scroll'>
-                {users.map((obj, index) => (
+                {users && users.map((obj, index) => (
                     <div key={index}
                         className={`rounded-full flex items-center hover:bg-base-200 mt-2
                             ${obj.email === receiver.email ? "bg-base-300" : ""}`}>

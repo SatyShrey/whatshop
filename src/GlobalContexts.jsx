@@ -11,7 +11,7 @@ export function GlobalProvider({ children }) {
   const [oldChats, setoldChats] = useState([]);
   const [receiver, setreceiver] = useState('')
   const socket = useRef();
-  const socketurl = import.meta.env.VITE_SOCKET_URL
+  const socketurl = import.meta.env.VITE_SOCKET_URL;
 
   useEffect(() => {
     Loader()
