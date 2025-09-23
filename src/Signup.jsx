@@ -1,13 +1,15 @@
 import axios from "axios";
 import {  useState } from "react";
 import { useValues } from "./GlobalContexts";
+import { useNavigate } from "react-router-dom";
 
 export default function Signup() {
     const [name, setname] = useState('');
     const [email, setemail] = useState('');
     const [password, setpassword] = useState('');
     const [cpassword, setcpassword] = useState('')
-    const {Loader, user}=useValues()
+    const {Loader,}=useValues();
+    const navigate=useNavigate();
      
     const handleSubmit=(e)=>{
         e.preventDefault();
@@ -30,7 +32,7 @@ export default function Signup() {
             placeholder="Password" type="password" />
             <input onChange={(e)=>setcpassword(e.target.value)} value={cpassword} className="h-11 bg-base-100 placeholder:text-gray-400 px-2 outline-none border rounded" placeholder="Confirm password" type="password" />
             <button type="submit" className="btn btn-primary">Sihnup</button>
-            <a href="/" className="text-center btn-link decoration-0">Go to login</a>
+            <button onClick={()=>{navigate('/login')}} className="btn btn-link" type="reset">Go to login</button>
         </form>
     </div>
   )
