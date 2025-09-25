@@ -20,34 +20,31 @@ export function GlobalProvider({ children }) {
     if (localuser) {
       Loader(true)
       axios.get('/api/start', { withCredentials: true }).then(data => {
-        Loader(false);
-         setuser(data.data.user);
-         setusers(data.data.users);
-        localStorage.setItem('user',JSON.stringify(data.data.user))
-        localStorage.setItem('users',JSON.stringify(data.data.users))
-      }).catch(err => { Loader(false); console.log("app server error:"+err.response.data.message) })
+        setuser(data.data.user);
+        setusers(data.data.users);
+        localStorage.setItem('user', JSON.stringify(data.data.user))
+        localStorage.setItem('users', JSON.stringify(data.data.users))
+
+        //socket part...........
+        try {
+          socket.current = io(socketurl, { withCredentials: true, 
+            query: { email: data.data.user.email,token:data.data.token }
+          });
+          socket.current.on('otp_sent', (data) => console.log(data));
+          socket.current.on('error', (data) => {Loader(false);console.log(data)});
+          socket.current.on('success', (data) => {Loader(false);console.log(data)});
+          socket.current.on('receive_message', (newChat) => {
+            setchats((prev) => [...prev, newChat]);
+            const localChats = localStorage.getItem('chats')
+            const newLocalChats = localChats ? JSON.parse(localChats) : []
+            localStorage.setItem('chats', JSON.stringify([...newLocalChats, newChat]));
+          })
+        } catch (error) { console.log(error);Loader(false) }
+        //socket part end.......................
+
+      }).catch(err => { Loader(false); console.log("app server error:" + err.response.data.message) })
     }
   }, [])
-
-  useEffect(() => {
-    try {
-      if (user) {
-        socket.current = io(socketurl, { withCredentials: true, query: { email: user.email } });
-        socket.current.on('otp_sent',(data)=>console.log(data));
-        socket.current.on('error',(data)=>console.log("socket error:"+data));
-        socket.current.on('receive_message', (newChat) => {
-          setchats((prev) => [...prev, newChat]);
-          const localChats = localStorage.getItem('chats')
-          const newLocalChats = localChats ? JSON.parse(localChats) : []
-          localStorage.setItem('chats', JSON.stringify([...newLocalChats, newChat]));
-        })
-      }
-
-      const localUsers = localStorage.getItem('users');
-      if (localUsers) { setusers(JSON.parse(localUsers)) }
-
-    } catch (error) { console.log(error) }
-  }, [user])
 
   return (
     <GlobalContexts.Provider value={{

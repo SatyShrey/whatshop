@@ -40,7 +40,12 @@ app.post('/api/login', async (req, res) => {
     const fakeotp = Math.floor(1000 + Math.random() * 9000).toString();
     await User.updateOne({email},{otp:fakeotp})
     const token = jwt.sign(user.toObject(), secret, { expiresIn: "30d" })
-    res.cookie("hiUser", token, { httpOnly: true, maxAge: 30 * 24 * 60 * 60 * 1000,sameSite:"none",secure:true })
+    res.cookie("hiUser", token, { 
+      httpOnly: true, 
+      maxAge: 30 * 24 * 60 * 60 * 1000,
+      sameSite:"none",
+      secure:true,
+    })
     res.send({ email: user.email, name: user.name });
   } catch (error) { res.status(502).send(error.message);console.log(error.message) }
 })
@@ -85,7 +90,7 @@ app.get("/api/start", async (req, res) => {
     await mongoose.connect(mongodb_url)
     const usersdata = await User.find({ email: { $ne: user.email } });
     const users=usersdata.map(a=>({name:a.name,email:a.email}))
-    res.send({user,users})
+    res.send({user,users,token})
   } catch (error) { res.status(502).send(error);console.log(error.message) }
 })
 
