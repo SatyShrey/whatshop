@@ -6,7 +6,7 @@ const GlobalContexts = createContext()
 export function GlobalProvider({ children }) {
   const [chats, setchats] = useState([]);
   const [loading, Loader] = useState(false);
-  const [user, setuser] = useState()//({name:"Satya",email:"satyaxyz31@gmail.com"});
+  const [user, setuser] = useState()
   const [users, setusers] = useState([]);
   const [oldChats, setoldChats] = useState([]);
   const [user2, setuser2] = useState('')
@@ -25,7 +25,7 @@ export function GlobalProvider({ children }) {
          setusers(data.data.users);
         localStorage.setItem('user',JSON.stringify(data.data.user))
         localStorage.setItem('users',JSON.stringify(data.data.users))
-      }).catch(err => { Loader(false); console.log(err.response.data.message) })
+      }).catch(err => { Loader(false); console.log("app server error:"+err.response.data.message) })
     }
   }, [])
 
@@ -34,7 +34,7 @@ export function GlobalProvider({ children }) {
       if (user) {
         socket.current = io(socketurl, { withCredentials: true, query: { email: user.email } });
         socket.current.on('otp_sent',(data)=>console.log(data));
-        socket.current.on('error',(data)=>console.log(data));
+        socket.current.on('error',(data)=>console.log("socket error:"+data));
         socket.current.on('receive_message', (newChat) => {
           setchats((prev) => [...prev, newChat]);
           const localChats = localStorage.getItem('chats')
