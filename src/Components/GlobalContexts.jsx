@@ -5,55 +5,53 @@ import { io } from "socket.io-client";
 const GlobalContexts = createContext()
 export function GlobalProvider({ children }) {
   const [chats, setchats] = useState([]);
-  const [loading, setloading] = useState(false);
-  const [user, setuser] = useState();
+  const [loading, Loader] = useState(false);
+  const [user, setuser] = useState()//({name:"Satya",email:"satyaxyz31@gmail.com"});
   const [users, setusers] = useState([]);
   const [oldChats, setoldChats] = useState([]);
-  const [receiver, setreceiver] = useState('')
+  const [user2, setuser2] = useState('')
   const socket = useRef();
   const socketurl = import.meta.env.VITE_SOCKET_URL;
 
   useEffect(() => {
-    Loader()
     const old_chats = localStorage.getItem('chats');
     if (old_chats) { setoldChats(JSON.parse(old_chats)) }
-    axios.get('/api/start', { withCredentials: true }).then(data => {
-      Loader()
-      if (data.data.user) { setuser(data.data.user); }
-      if (data.data.users) { setusers(data.data.users); }
-    }).catch(err => { alert(err.message); Loader() })
+    const localuser = localStorage.getItem('user');
+    if (localuser) {
+      Loader(true)
+      axios.get('/api/start', { withCredentials: true }).then(data => {
+        Loader(false);
+         setuser(data.data.user);
+         setusers(data.data.users);
+        localStorage.setItem('user',JSON.stringify(data.data.user))
+        localStorage.setItem('users',JSON.stringify(data.data.users))
+      }).catch(err => { Loader(false); console.log(err.response.data.message) })
+    }
   }, [])
 
   useEffect(() => {
     try {
       if (user) {
         socket.current = io(socketurl, { withCredentials: true, query: { email: user.email } });
+        socket.current.on('otp_sent',(data)=>console.log(data));
+        socket.current.on('error',(data)=>console.log(data));
         socket.current.on('receive_message', (newChat) => {
           setchats((prev) => [...prev, newChat]);
           const localChats = localStorage.getItem('chats')
-          const newLocalChats =localChats ? JSON.parse(localChats) : []
+          const newLocalChats = localChats ? JSON.parse(localChats) : []
           localStorage.setItem('chats', JSON.stringify([...newLocalChats, newChat]));
         })
       }
+
+      const localUsers = localStorage.getItem('users');
+      if (localUsers) { setusers(JSON.parse(localUsers)) }
+
     } catch (error) { console.log(error) }
   }, [user])
 
-  //Loader show/hide
-  function Loader() {
-    setloading((prev) => !prev)
-  }
-
-  //rough
-  useEffect(() => {
-    // const arr=[{name:"Satya",age:"23"},{name:"Kari",age:"21"}];
-    // const arr3=arr.map(a=>({...a,age:'12'}));console.log(arr3);
-    // console.log("Answer:")
-    // console.log(arr3)
-  }, [])
-
   return (
     <GlobalContexts.Provider value={{
-      chats, setchats, user, setuser, socket, receiver, setreceiver, users, setusers,
+      chats, setchats, user, setuser, socket, user2, setuser2, users, setusers,
       loading, Loader, oldChats, setoldChats
     }}>
       {children}
