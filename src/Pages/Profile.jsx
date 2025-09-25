@@ -5,7 +5,7 @@ import ThemeController from "../Components/ThemeController";
 import { BiArrowBack } from "react-icons/bi";
 
 export default function Profile() {
-    const { user, setuser, setusers, Loader } = useValues();
+    const { user, setuser, setusers, Loader,settheme,theme } = useValues();
     const navigate = useNavigate();
 
     function logout() {
@@ -17,7 +17,7 @@ export default function Profile() {
                 setuser(null);
                 setusers(null);
                 localStorage.clear();
-                location.replace('/login');
+                navigate('/login');
             }).catch(e => { alert(e.message); Loader() })
         }
     }
@@ -27,7 +27,7 @@ export default function Profile() {
 
             <div className="flex justify-between items-center mb-10">
                 <BiArrowBack size={30} onClick={() => navigate('/')} />
-                <ThemeController />
+                <ThemeController settheme={settheme} theme={theme} /><div className="w-[25px]"></div>
             </div>
             <div className="p-2 w-fit rounded-2xl shadow border border-base-300 mx-auto text-center">
                 {
@@ -35,7 +35,7 @@ export default function Profile() {
                         <p className="text-2xl font-bold">{user.name}</p>
                         <p className="my-2">{user.email}</p>
                         <button onClick={logout} className="btn">Logout</button>
-                    </> : <button onClick={()=>location.replace('login')} className="btn">Login</button>
+                    </> : <button onClick={()=>navigate('/login')} className="btn">Login</button>
                 }
             </div>
 

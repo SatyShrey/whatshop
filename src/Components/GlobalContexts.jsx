@@ -10,14 +10,15 @@ export function GlobalProvider({ children }) {
   const [users, setusers] = useState([]);
   const [oldChats, setoldChats] = useState([]);
   const [user2, setuser2] = useState('')
+  const [theme, settheme] = useState();
   const socket = useRef();
   const socketurl = import.meta.env.VITE_SOCKET_URL;
 
-  useEffect(() => {
-    const old_chats = localStorage.getItem('chats');
-    if (old_chats) { setoldChats(JSON.parse(old_chats)) }
+  function loadData() {
     const localuser = localStorage.getItem('user');
     if (localuser) {
+      const old_chats = localStorage.getItem('chats');
+      if (old_chats) { setoldChats(JSON.parse(old_chats)) }
       Loader(true)
       axios.get('/api/start', { withCredentials: true }).then(data => {
         setuser(data.data.user);
@@ -27,29 +28,36 @@ export function GlobalProvider({ children }) {
 
         //socket part...........
         try {
-          socket.current = io(socketurl, { withCredentials: true, 
-            query: { email: data.data.user.email,token:data.data.token }
+          socket.current = io(socketurl, {
+            withCredentials: true,
+            query: { email: data.data.user.email, token: data.data.token }
           });
           socket.current.on('otp_sent', (data) => console.log(data));
-          socket.current.on('error', (data) => {Loader(false);console.log(data)});
-          socket.current.on('success', (data) => {Loader(false);console.log(data)});
+          socket.current.on('error', (data) => { Loader(false); console.log(data) });
+          socket.current.on('success', (data) => { Loader(false); console.log(data) });
           socket.current.on('receive_message', (newChat) => {
             setchats((prev) => [...prev, newChat]);
             const localChats = localStorage.getItem('chats')
             const newLocalChats = localChats ? JSON.parse(localChats) : []
             localStorage.setItem('chats', JSON.stringify([...newLocalChats, newChat]));
           })
-        } catch (error) { console.log(error);Loader(false) }
+        } catch (error) { console.log(error); Loader(false) }
         //socket part end.......................
 
       }).catch(err => { Loader(false); console.log("app server error:" + err.response.data.message) })
     }
+  }
+
+  useEffect(() => {
+    loadData();
+    const localTheme=localStorage.getItem('theme');
+    if(localTheme=='true'){settheme(true)}else{settheme(false)}
   }, [])
 
   return (
     <GlobalContexts.Provider value={{
       chats, setchats, user, setuser, socket, user2, setuser2, users, setusers,
-      loading, Loader, oldChats, setoldChats
+      loading, Loader, oldChats, setoldChats,loadData,theme, settheme
     }}>
       {children}
     </GlobalContexts.Provider>

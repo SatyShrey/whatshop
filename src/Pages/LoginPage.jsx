@@ -1,13 +1,15 @@
 import axios from "axios"
 import { useState } from "react"
 import { useValues } from "../Components/GlobalContexts"
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const [email, setemail] = useState('');
     const [name, setname] = useState('');
     const [otp, setotp] = useState('');
-    const { Loader } = useValues();
+    const { Loader,loadData } = useValues();
     const [isOtp, setIsOtp] = useState(false);
+    const navigate=useNavigate()
 
     const handleSendOTP = () => {
         if (!email || !name) { return alert('Please enter name and email') }
@@ -24,7 +26,7 @@ export default function Login() {
         axios.post('/api/login', { email, otp }).then(data => {
             console.log(data.data);
             localStorage.setItem('user', JSON.stringify(data.data))
-            location.replace('/');
+            navigate('/');loadData();
         }).catch(error => { alert(error.response.data); })
             .finally(() => { Loader(false) })
     }

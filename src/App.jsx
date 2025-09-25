@@ -6,14 +6,16 @@ import Profile from "./Pages/Profile";
 import Modal from "./Components/Modal";
 import LoginPage from "./Pages/LoginPage";
 import Chatting from "./Pages/Chatting";
+import { useValues } from "./Components/GlobalContexts";
 
 export default function App() {
    const location = useLocation();
   const hideNavbarPaths = ['/chats'];
   const shouldHideNavbar = hideNavbarPaths.includes(location.pathname);
+  const {theme}=useValues();
 
   return (
-    <div className="shadow-[0_0_2px] h-dvh font-[Poppins] flex flex-col overflow-hidden">
+    <div className="shadow-[0_0_2px] h-dvh font-[Poppins] flex flex-col overflow-hidden" data-theme={theme?"night":"light"}>
       {!shouldHideNavbar && <Header/>}
          <Routes>
             <Route path="/" element={<Protected><Contents/></Protected>}/>
