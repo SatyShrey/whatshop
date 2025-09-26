@@ -14,7 +14,7 @@ export default function Contacts() {
 
     return (
         <>
-            <div className="h-12 mb-2">
+            <div className="h-14 mb-2 px-1">
                 <input placeholder="Search..." type="text" className="h-full w-full rounded-full px-4 shadow-[0_0_2px] placeholder:text-gray-400 outline-none bg-base-200"
                     value={search}
                     onChange={(e) => {
@@ -22,7 +22,7 @@ export default function Contacts() {
                     }} />
             </div>
 
-            <div style={{ scrollbarWidth: "none" }} className='flex-1 overflow-y-scroll'>
+            <div style={{ scrollbarWidth: "none" }} className='flex-1 overflow-y-scroll px-1'>
                 {users && users.
                     filter(f => (f.email.includes(search.toLowerCase()) || f.name.toLowerCase().includes(search.toLowerCase())))
                     .map((obj, index) => (
