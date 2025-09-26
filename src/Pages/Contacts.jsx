@@ -2,10 +2,10 @@ import { BiUser } from "react-icons/bi"
 import { useNavigate, } from "react-router-dom";
 import { useValues } from "../Components/GlobalContexts";
 import { useState } from "react";
-import { BsChatSquare, BsChatSquareFill } from "react-icons/bs";
+import {  BsChatSquareFill } from "react-icons/bs";
 import { IoCallSharp } from "react-icons/io5";
-import { GrStatusCritical, GrUpdate } from "react-icons/gr";
 import { HiStatusOnline } from "react-icons/hi";
+import { MdGroups } from "react-icons/md";
 
 export default function Contacts() {
     const { setuser2, users, setprofileuser, } = useValues();
@@ -41,10 +41,11 @@ export default function Contacts() {
                     )}
             </div>
 
-            <div className="bg-primary flex justify-evenly p-2 text-base-100">
-                <div className="flex flex-col items-center"><BsChatSquareFill size={30} />Chats</div>
-                <div className="flex flex-col items-center"><HiStatusOnline size={30} />Status</div>
-                <div className="flex flex-col items-center"><IoCallSharp size={30} />Calls</div>
+            <div className="bg-primary flex justify-evenly p-1 pb-0 text-base-100">
+                <div className="flex flex-col items-center cursor-pointer bg-base-100 px-3 pt-1 rounded-tl-2xl rounded-tr-2xl text-primary"><BsChatSquareFill size={30} />Chats</div>
+                <div className="flex flex-col items-center cursor-pointer"><HiStatusOnline size={30} />Status</div>
+                <div className="flex flex-col items-center cursor-pointer"><MdGroups size={30} />Communities</div>
+                <div className="flex flex-col items-center cursor-pointer"><IoCallSharp size={30} />Calls</div>
             </div>
         </>
     )

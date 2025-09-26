@@ -1,8 +1,7 @@
-import { MdMenu } from "react-icons/md";
 import { useLocation, useNavigate } from "react-router-dom";
 import ThemeController from "./ThemeController";
 import { useValues } from "./GlobalContexts";
-import { BiUser, BiUserCircle } from "react-icons/bi";
+import { BiUserCircle } from "react-icons/bi";
 
 export default function Header() {
   const { settheme, theme, user,setprofileuser } = useValues();

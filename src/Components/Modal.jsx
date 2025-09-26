@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react"
 import { useValues } from "./GlobalContexts"
 
 export default function Modal() {
-  const { loading, setloading } = useValues();
+  const { loading, } = useValues();
   const loaderRef = useRef();
 
   useEffect(() => {
