@@ -4,7 +4,7 @@ import { useValues } from "../Components/GlobalContexts";
 import { useState } from "react";
 
 export default function Contacts() {
-    const { setuser2, users } = useValues();
+    const { setuser2, users,setprofileuser, } = useValues();
     const navigate = useNavigate();
     const [search,setsearch]=useState('');
 
@@ -19,10 +19,15 @@ export default function Contacts() {
             </div>
 
             <div style={{ scrollbarWidth: "none" }} className='flex-1 overflow-y-scroll'>
-                {users && users.filter(f=>(f.email.includes(search) || f.name.includes(search))).map((obj, index) => (
+                {users && users.
+                filter(f=>(f.email.includes(search.toLowerCase()) || f.name.toLowerCase().includes(search.toLowerCase())))
+                .map((obj, index) => (
                     <div key={index}
                         className="rounded-full flex items-center hover:bg-base-200 my-2">
-                        <BiUser size={30} className="cursor-pointer mx-2" />
+                        <BiUser size={30} className="cursor-pointer mx-2" onClick={()=>{
+                            setprofileuser(obj);
+                            navigate('/profile')
+                        }} />
                         <p onClick={() => { setuser2(obj); }}
                             className="h-full py-3 flex-1 overflow-x-hidden text-ellipsis not-md:hidden cursor-pointer">{obj.name}</p>
                         <p onClick={() => { setuser2(obj); navigate('/chats') }}
