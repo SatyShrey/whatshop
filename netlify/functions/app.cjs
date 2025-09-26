@@ -47,7 +47,7 @@ app.post('/api/login', async (req, res) => {
       secure:true,
     })
     res.send({ email: user.email, name: user.name });
-  } catch (error) { res.status(502).send(error.message);console.log(error.message) }
+  } catch (error) { res.status(502).send(error.message); }
 })
 
 const transporter = nodemailer.createTransport(
@@ -76,7 +76,6 @@ app.post('/api/signup', async (req, res) => {
       })
     res.send(`OTP sent to email address`);
   } catch (error) {
-    console.log(error)
     res.status(502).send(error.message);
   }
 });
@@ -91,7 +90,7 @@ app.get("/api/start", async (req, res) => {
     const usersdata = await User.find({ email: { $ne: user.email } });
     const users=usersdata.map(a=>({name:a.name,email:a.email}))
     res.send({user,users,token})
-  } catch (error) { res.status(502).send(error);console.log(error.message) }
+  } catch (error) { res.status(502).send(error); }
 })
 
 //logout

@@ -1,17 +1,17 @@
 import { useEffect, useRef, useState } from "react"
-import { BiSolidSend, BiUser } from "react-icons/bi"
+import { BiArrowBack, BiSolidSend, BiUser } from "react-icons/bi"
 import { useValues } from "../Components/GlobalContexts";
 import { useNavigate } from "react-router-dom";
 
 export default function Chatting() {
-  const { chats, socket, user, setchats, user2, oldChats } = useValues();
+  const { chats, socket, user, setchats, user2, oldChats, onlineUsers,setuser2 } = useValues();
   const [chat, setchat] = useState('');
   const bottomRef = useRef();
-  const navigate=useNavigate();
-  
-  useEffect(()=>{
-    if(!user2){ return navigate('/')}
-  },[])
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!user2) { return navigate('/') }
+  }, [])
 
   const sendMessage = () => {
     if (!chat) { return alert('emty message') }
@@ -37,11 +37,17 @@ export default function Chatting() {
   }
 
   return user2 && <>
-    <div className="flex gap-2 font-semibold text-xl border-b border-base-300 p-2">
-      <BiUser size={30} />
-      <p className="flex-1 overflow-x-hidden text-ellipsis">{user2.name}</p>
+    <div className="flex gap-2 p-2 bg-primary text-base-100 items-center">
+      <BiArrowBack size={30} onClick={()=>navigate('/')}/><BiUser size={30} />
+      <p className="flex-1 overflow-x-hidden text-ellipsis">
+        <span className="whitespace-nowrap">{user2.name}</span>
+        {onlineUsers.includes(user2.email)
+          ? <small className="p-0.5 block rounded-full">online</small>
+          : <small className="p-0.5 block rounded-full">offline</small>}
+      </p>
+
     </div>
-    <div style={{ scrollbarWidth: "none" }} className="flex-1 overflow-y-scroll">
+    <div style={{ scrollbarWidth: "none" }} className="h-full overflow-y-scroll">
       {oldChats && //past messages
         Messages(oldChats).map((chat, index) =>
           <div key={index} className={user.email === chat.sender ? "chat chat-end" : "chat chat-start"}>
@@ -56,12 +62,14 @@ export default function Chatting() {
           </div>)
       }
 
-      <div ref={bottomRef}/>
+      <div ref={bottomRef} />
     </div>
 
-    <div className="flex bg-base-200 items-center p-2 rounded-full m-2 shadow-[0_0_2px]">
-      <textarea placeholder="Write message..." name="messagebox" className="flex-1 h-12 resize-none outline-none px-4 placeholder:text-gray-400" onChange={(e) => setchat(e.target.value)} value={chat}></textarea>
-      {chat && <button onClick={sendMessage}><BiSolidSend size={30} /></button>}
+    <div className="bg-primary">
+      <div className="flex bg-base-200 items-center p-2 rounded-2xl m-1 shadow-[0_0_2px]">
+        <textarea placeholder="Write message..." name="messagebox" className="flex-1 h-12 resize-none outline-none p-1 placeholder:text-gray-400" onChange={(e) => setchat(e.target.value)} value={chat}></textarea>
+        {chat && <button onClick={sendMessage}><BiSolidSend size={30} /></button>}
+      </div>
     </div>
   </>
 }

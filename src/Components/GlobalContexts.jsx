@@ -8,9 +8,10 @@ export function GlobalProvider({ children }) {
   const [loading, Loader] = useState(false);
   const [user, setuser] = useState()
   const [users, setusers] = useState([]);
+  const [onlineUsers, setonlineUsers] = useState([]);
   const [oldChats, setoldChats] = useState([]);
   const [user2, setuser2] = useState('')
-  const [theme, settheme] = useState();
+  const [theme, settheme] = useState(false);
   const socket = useRef();
   const socketurl = import.meta.env.VITE_SOCKET_URL;
 
@@ -33,18 +34,20 @@ export function GlobalProvider({ children }) {
             query: { email: data.data.user.email, token: data.data.token }
           });
           socket.current.on('otp_sent', (data) => console.log(data));
-          socket.current.on('error', (data) => { Loader(false); console.log(data) });
-          socket.current.on('success', (data) => { Loader(false); console.log(data) });
+          socket.current.on('error', (data) => { Loader(false); });
+          socket.current.on('success', (data) => { Loader(false); });
+          socket.current.on('online', (data) => { setonlineUsers(data) });
+          socket.current.on('offline', (data) => { setonlineUsers(data) });
           socket.current.on('receive_message', (newChat) => {
             setchats((prev) => [...prev, newChat]);
             const localChats = localStorage.getItem('chats')
             const newLocalChats = localChats ? JSON.parse(localChats) : []
             localStorage.setItem('chats', JSON.stringify([...newLocalChats, newChat]));
           })
-        } catch (error) { console.log(error); Loader(false) }
+        } catch (error) { Loader(false) }
         //socket part end.......................
 
-      }).catch(err => { Loader(false); console.log("app server error:" + err.response.data.message) })
+      }).catch(err => { Loader(false); })
     }
   }
 
@@ -57,7 +60,7 @@ export function GlobalProvider({ children }) {
   return (
     <GlobalContexts.Provider value={{
       chats, setchats, user, setuser, socket, user2, setuser2, users, setusers,
-      loading, Loader, oldChats, setoldChats,loadData,theme, settheme
+      loading, Loader, oldChats, setoldChats,loadData,theme, settheme,onlineUsers
     }}>
       {children}
     </GlobalContexts.Provider>

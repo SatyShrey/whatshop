@@ -3,7 +3,7 @@ import { useNavigate, } from "react-router-dom";
 import { useValues } from "../Components/GlobalContexts";
 
 export default function Contacts() {
-    const { setuser2, user2, users } = useValues();
+    const { setuser2, users } = useValues();
     const navigate = useNavigate()
 
     return (
@@ -15,8 +15,7 @@ export default function Contacts() {
             <div style={{ scrollbarWidth: "none" }} className='flex-1 overflow-y-scroll'>
                 {users && users.map((obj, index) => (
                     <div key={index}
-                        className={`rounded-full flex items-center hover:bg-base-200 mt-2
-                            ${obj.email === user2.email ? "bg-base-300" : ""}`}>
+                        className="rounded-full flex items-center hover:bg-base-200 mt-2">
                         <BiUser size={30} className="cursor-pointer mx-2" />
                         <p onClick={() => { setuser2(obj); }}
                             className="h-full py-3 flex-1 overflow-x-hidden text-ellipsis not-md:hidden cursor-pointer">{obj.name}</p>
@@ -25,6 +24,7 @@ export default function Contacts() {
                     </div>
                 )
                 )}
+                
             </div>
         </>
     )

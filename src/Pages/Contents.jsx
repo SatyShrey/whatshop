@@ -3,12 +3,12 @@ import Contacts from "./Contacts";
 
 export default function Contents({mainsreen="contact"}) {
   return (
-    <div className="flex h-full">
-      <div className={`relative h-full w-full p-2 flex flex-col md:w-[40%] md:border-r border-base-300 ${mainsreen==="chat" ? "not-md:hidden" :""}`}>
+    <div className="flex flex-1 overflow-hidden">
+      <div className={`p-2 flex flex-col w-[40%] not-md:w-full md:border-r border-base-300 ${mainsreen==="chat" ? "not-md:hidden" :""}`}>
         <Contacts/>
       </div>
 
-      <div className={`relative p-2 flex flex-col flex-1 h-full ${mainsreen==="contact" ? "not-md:hidden":""}`}>
+      <div className={` p-1 pb-0 flex flex-col flex-1 ${mainsreen==="contact" ? "not-md:hidden":""}`}>
         <Chatting/>
       </div>
     </div>

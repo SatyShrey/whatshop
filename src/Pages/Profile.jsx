@@ -5,7 +5,7 @@ import ThemeController from "../Components/ThemeController";
 import { BiArrowBack } from "react-icons/bi";
 
 export default function Profile() {
-    const { user, setuser, setusers, Loader,settheme,theme } = useValues();
+    const { user, setuser, setusers, Loader, } = useValues();
     const navigate = useNavigate();
 
     function logout() {
@@ -25,10 +25,7 @@ export default function Profile() {
     return (
         <div style={{ scrollbarWidth: "none" }} className="px-2 flex-1 overflow-scroll">
 
-            <div className="flex justify-between items-center mb-10">
                 <BiArrowBack size={30} onClick={() => navigate('/')} />
-                <ThemeController settheme={settheme} theme={theme} /><div className="w-[25px]"></div>
-            </div>
             <div className="p-2 w-fit rounded-2xl shadow border border-base-300 mx-auto text-center">
                 {
                     user ? <>
