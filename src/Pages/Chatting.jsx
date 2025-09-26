@@ -69,7 +69,7 @@ export default function Chatting() {
 
     <div className="bg-primary">
       <div className="flex bg-base-200 items-center p-2 rounded-2xl m-1 shadow-[0_0_2px]">
-        <textarea placeholder="Write message..." name="messagebox" className="flex-1 h-12 resize-none outline-none p-1 placeholder:text-gray-400" onChange={(e) => setchat(e.target.value)} value={chat}></textarea>
+        <textarea placeholder="Write message..." name="messagebox" className="flex-1 h-14 resize-none outline-none p-1 placeholder:text-gray-400" onChange={(e) => setchat(e.target.value)} value={chat}></textarea>
         {chat && <button onClick={sendMessage}><BiSolidSend size={30} /></button>}
       </div>
     </div>
