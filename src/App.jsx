@@ -15,7 +15,8 @@ export default function App() {
   const {theme}=useValues();
 
   return (
-    <div className="shadow-[0_0_2px] h-dvh font-[Poppins] flex flex-col overflow-hidden" data-theme={theme?"night":"light"}>
+    <div className="shadow-[0_0_2px] h-dvh font-[Poppins] flex flex-col overflow-hidden"
+     data-theme={theme?"night":"emerald"}>
       {!shouldHideNavbar && <Header/>}
          <Routes>
             <Route path="/" element={<Protected><Contents/></Protected>}/>

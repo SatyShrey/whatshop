@@ -13,6 +13,7 @@ export function GlobalProvider({ children }) {
   const [user2, setuser2] = useState('')
   const [theme, settheme] = useState(false);
   const socket = useRef();
+  const [profileuser, setprofileuser] = useState(null);
   const socketurl = import.meta.env.VITE_SOCKET_URL;
 
   function loadData() {
@@ -60,7 +61,8 @@ export function GlobalProvider({ children }) {
   return (
     <GlobalContexts.Provider value={{
       chats, setchats, user, setuser, socket, user2, setuser2, users, setusers,
-      loading, Loader, oldChats, setoldChats,loadData,theme, settheme,onlineUsers
+      loading, Loader, oldChats, setoldChats,loadData,theme, settheme,onlineUsers,
+      profileuser, setprofileuser
     }}>
       {children}
     </GlobalContexts.Provider>

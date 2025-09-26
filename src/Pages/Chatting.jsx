@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react"
 import { BiArrowBack, BiSolidSend, BiUser } from "react-icons/bi"
 import { useValues } from "../Components/GlobalContexts";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Chatting() {
   const { chats, socket, user, setchats, user2, oldChats, onlineUsers,setuser2 } = useValues();
   const [chat, setchat] = useState('');
   const bottomRef = useRef();
   const navigate = useNavigate();
+  const locate=useLocation();
 
   useEffect(() => {
     if (!user2) { return navigate('/') }
@@ -38,7 +39,8 @@ export default function Chatting() {
 
   return user2 && <>
     <div className="flex gap-2 p-2 bg-primary text-base-100 items-center">
-      <BiArrowBack size={30} onClick={()=>navigate('/')}/><BiUser size={30} />
+      {locate.pathname.includes('chats') && <BiArrowBack size={30} onClick={()=>navigate('/')}/>}
+        <BiUser size={30} />
       <p className="flex-1 overflow-x-hidden text-ellipsis">
         <span className="whitespace-nowrap">{user2.name}</span>
         {onlineUsers.includes(user2.email)

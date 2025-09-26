@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useValues } from "../Components/GlobalContexts"
 import { useNavigate } from "react-router-dom";
 
@@ -7,12 +7,16 @@ export default function Login() {
     const [email, setemail] = useState('');
     const [name, setname] = useState('');
     const [otp, setotp] = useState('');
-    const { Loader,loadData } = useValues();
+    const { Loader,loadData,} = useValues();
     const [isOtp, setIsOtp] = useState(false);
     const navigate=useNavigate()
     const nameRegex=/^[a-zA-Z' -]{2,49}$/
     const emailRegex=/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+    const localUser=localStorage.getItem('user');
 
+    useEffect(()=>{
+        if(localUser){navigate('/')}
+    },[])
     const handleSendOTP = () => {
         if (!nameRegex.test(name)) { return alert('Please enter valid name') }
         if (!emailRegex.test(email)) { return alert('Please enter avalid email') }

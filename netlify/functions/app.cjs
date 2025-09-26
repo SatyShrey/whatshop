@@ -80,6 +80,19 @@ app.post('/api/signup', async (req, res) => {
   }
 });
 
+//edit name
+app.put('/api/edit-name',async(req,res)=>{
+  try{
+    const {name}=req.body
+    const token = req.cookies.hiUser;
+    const decoded = jwt.verify(token, secret);
+    const user = decoded;
+    await mongoose.connect(mongodb_url)
+    await User.findOneAndUpdate({email:user.email},{name:name})
+    res.send('Name updated successfully');
+  }catch(err){res.status(502).send(err.message)}
+})
+
 //**start app**/
 app.get("/api/start", async (req, res) => {
   try {
