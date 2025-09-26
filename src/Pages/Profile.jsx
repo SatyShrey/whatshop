@@ -15,10 +15,9 @@ export default function Profile() {
         if (conf) {
             Loader()
             axios.get('/api/logout', { withCredentials: true }).then(data => {
-                Loader()
                 localStorage.clear();
                 location.replace('/login')
-            }).catch(e => { alert(e.message); Loader() })
+            }).catch(e => { alert(e.message);}).finally(()=>Loader(false))
         }
     }
 
