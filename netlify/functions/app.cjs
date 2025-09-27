@@ -98,10 +98,11 @@ app.get("/api/start", async (req, res) => {
   try {
     const token = req.cookies.hiUser;
     const decoded = jwt.verify(token, secret);
-    const user = decoded;
     await mongoose.connect(mongodb_url)
-    const usersdata = await User.find({ email: { $ne: user.email } });
-    const users=usersdata.map(a=>({name:a.name,email:a.email}))
+    const usersdata = await User.find({});
+    const users=usersdata.filter(f=>f.email !== decoded.email).map(a=>({name:a.name,email:a.email}))
+    const userdata=usersdata.find(a=>a.email===decoded.email);
+    const user={email:userdata.email,name:userdata.name};
     res.send({user,users,token})
   } catch (error) { res.status(502).send(error); }
 })
