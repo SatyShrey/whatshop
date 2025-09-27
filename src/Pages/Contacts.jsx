@@ -13,7 +13,7 @@ export default function Contacts() {
 
     return (
         <>
-            <div className="h-12 m-1">
+            <div className="h-12 m-auto w-[95%]">
                 <input placeholder="Search..." type="text" className="h-full w-full rounded-full px-4 shadow-[0_0_2px] placeholder:text-gray-400 outline-none bg-base-200"
                     value={search}
                     onChange={(e) => {

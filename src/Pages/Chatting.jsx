@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react"
 import { BiArrowBack, BiSolidSend, BiUser } from "react-icons/bi"
 import { useValues } from "../Components/GlobalContexts";
 import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Chatting() {
   const { chats, socket, user, setchats, user2, oldChats, onlineUsers, setuser2 } = useValues();
@@ -15,7 +16,7 @@ export default function Chatting() {
   }, [])
 
   const sendMessage = () => {
-    if (!chat) { return alert('emty message') }
+    if (!chat) { return toast.error('emty message') }
     const newChat = {
       text: chat, receiver: user2.email, sender: user.email,
       time: (new Date()).toLocaleTimeString() + " " + (new Date()).toLocaleDateString()

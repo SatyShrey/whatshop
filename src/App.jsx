@@ -7,6 +7,7 @@ import Modal from "./Components/Modal";
 import LoginPage from "./Pages/LoginPage";
 import Chatting from "./Pages/Chatting";
 import { useValues } from "./Components/GlobalContexts";
+import Logout from "./Components/Logout";
 
 export default function App() {
    const location = useLocation();
@@ -15,8 +16,8 @@ export default function App() {
   const {theme}=useValues();
 
   return (
-    <div className="shadow-[0_0_2px] h-dvh font-[Poppins] flex flex-col overflow-hidden"
-     data-theme={theme?"night":"emerald"}>
+    <div className="shadow-[0_0_2px] h-dvh flex flex-col overflow-hidden"
+     data-theme={theme?"night":"light"}>
       {!shouldHideNavbar && <Header/>}
          <Routes>
             <Route path="/" element={<Protected><Contents/></Protected>}/>
@@ -24,7 +25,7 @@ export default function App() {
             <Route path="/profile" element={<Profile/>}/>
             <Route path="/chats" element={<Protected><Chatting/></Protected>}/>
          </Routes>
-      <Modal/>
+      <Modal/><Logout/>
     </div>
   )
 }

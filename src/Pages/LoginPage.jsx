@@ -2,6 +2,7 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useValues } from "../Components/GlobalContexts"
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Login() {
     const [email, setemail] = useState('');
@@ -18,22 +19,22 @@ export default function Login() {
         if(localUser){navigate('/')}
     },[])
     const handleSendOTP = () => {
-        if (!nameRegex.test(name)) { return alert('Please enter valid name') }
-        if (!emailRegex.test(email)) { return alert('Please enter avalid email') }
+        if (!nameRegex.test(name)) { return toast.error('Please enter valid name') }
+        if (!emailRegex.test(email)) { return toast.error('Please enter avalid email') }
         Loader(true)
         axios.post('/api/signup', { name, email:email.toLowerCase() }).then(data => {
-            alert(data.data); setIsOtp(true);setotp('')
-        }).catch(error => { alert(error.response.data); })
+            toast.success(data.data); setIsOtp(true);setotp('')
+        }).catch(error => { toast.error(error.response.data); })
             .finally(() => { Loader(false) })
     }
 
     const handleVerifyOTP = () => {
-        if (!otp || otp.length !== 4 || !email) { return alert('Please enter email and OTP') }
+        if (!otp || otp.length !== 4 || !email) { return toast.error('Please enter email and OTP') }
         Loader(true)
         axios.post('/api/login', { email:email.toLowerCase(), otp }).then(data => {
             localStorage.setItem('user', JSON.stringify(data.data))
             navigate('/');loadData();
-        }).catch(error => { alert(error.response.data); })
+        }).catch(error => { toast.error(error.response.data); })
             .finally(() => { Loader(false) })
     }
 
