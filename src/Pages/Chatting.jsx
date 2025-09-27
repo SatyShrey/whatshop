@@ -58,7 +58,7 @@ export default function Chatting() {
           <div key={index} className={user.email === chat.sender ? "chat chat-end" : "chat chat-start"}>
             <div className="chat-bubble">
               <pre className="whitespace-pre-wrap wrap-anywhere">{chat.text}</pre>
-              <div className="text-[10px] text-accent">{chat.time}</div>
+              <div className={`text-[10px] text-accent ${user.email === chat.sender ?'text-right':''}`}>{chat.time}</div>
             </div>
           </div>)
       }
@@ -68,7 +68,7 @@ export default function Chatting() {
           <div key={index} className={user.email === chat.sender ? "chat chat-end" : "chat chat-start"}>
             <div className="chat-bubble">
               <pre className="whitespace-pre-wrap wrap-anywhere">{chat.text}</pre>
-              <div className="text-[10px] text-accent text-right">{chat.time}</div>
+              <div className={`text-[10px] text-accent ${user.email === chat.sender ?'text-right':''}`}>{chat.time}</div>
             </div>
           </div>)
       }
