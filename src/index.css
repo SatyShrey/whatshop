@@ -3,3 +3,10 @@
   themes: all;
 }
 *{box-sizing: border-box;font-family: Poppins;}
+.anim2{
+  animation: anim2 .3s;
+}
+@keyframes anim2{
+  0%{opacity: 0;transform: translateY(100%);}
+  100%{opacity: 1;transform:translateY(0%);}
+}

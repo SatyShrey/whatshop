@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function Chatting() {
-  const { chats, socket, user, setchats, user2, oldChats, onlineUsers, setuser2 } = useValues();
+  const { chats, socket, user, setchats, user2, oldChats, onlineUsers, } = useValues();
   const [chat, setchat] = useState('');
   const bottomRef = useRef();
   const navigate = useNavigate();
@@ -44,7 +44,13 @@ export default function Chatting() {
   return user2 && <>
     <div className="flex gap-2 p-2 bg-primary text-base-100 items-center">
       {locate.pathname.includes('chats') && <BiArrowBack size={30} onClick={() => navigate('/')} />}
-      <BiUser size={30} />
+      <button className="cursor-pointer mx-2 rounded-full border overflow-hidden" onClick={() => {
+        navigate('/profile2')
+      }} >
+        {user2.imageUrl
+          ? <img src={user2.imageUrl} alt="profile-pic" className="w-10" />
+          : <BiUser size={30} />}
+      </button>
       <p className="flex-1 overflow-x-hidden text-ellipsis">
         <span className="whitespace-nowrap">{user2.name}</span>
         {onlineUsers.includes(user2.email)
@@ -59,7 +65,7 @@ export default function Chatting() {
           <div key={index} className={user.email === chat.sender ? "chat chat-end" : "chat chat-start"}>
             <div className="chat-bubble">
               <pre className="whitespace-pre-wrap wrap-anywhere">{chat.text}</pre>
-              <div className={`text-[10px] text-accent ${user.email === chat.sender ?'text-right':''}`}>{chat.time}</div>
+              <div className={`text-[10px] text-accent ${user.email === chat.sender ? 'text-right' : ''}`}>{chat.time}</div>
             </div>
           </div>)
       }
@@ -69,7 +75,7 @@ export default function Chatting() {
           <div key={index} className={user.email === chat.sender ? "chat chat-end" : "chat chat-start"}>
             <div className="chat-bubble">
               <pre className="whitespace-pre-wrap wrap-anywhere">{chat.text}</pre>
-              <div className={`text-[10px] text-accent ${user.email === chat.sender ?'text-right':''}`}>{chat.time}</div>
+              <div className={`text-[10px] text-accent ${user.email === chat.sender ? 'text-right' : ''}`}>{chat.time}</div>
             </div>
           </div>)
       }

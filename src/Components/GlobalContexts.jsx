@@ -13,9 +13,9 @@ export function GlobalProvider({ children }) {
   const [user2, setuser2] = useState('')
   const [theme, settheme] = useState(false);
   const socket = useRef();
-  const [profileuser, setprofileuser] = useState(null);
   const socketurl = import.meta.env.VITE_SOCKET_URL;
 
+  //load user data from server and connect to socket when needed
   function loadData() {
     const localuser = localStorage.getItem('user');
     if (localuser) {
@@ -54,6 +54,7 @@ export function GlobalProvider({ children }) {
 
   useEffect(() => {
     loadData();
+    //set theme to last time changed
     const localTheme=localStorage.getItem('theme');
     if(localTheme=='true'){settheme(true)}else{settheme(false)}
   }, [])
@@ -62,7 +63,6 @@ export function GlobalProvider({ children }) {
     <GlobalContexts.Provider value={{
       chats, setchats, user, setuser, socket, user2, setuser2, users, setusers,
       loading, Loader, oldChats, setoldChats,loadData,theme, settheme,onlineUsers,
-      profileuser, setprofileuser
     }}>
       {children}
     </GlobalContexts.Provider>

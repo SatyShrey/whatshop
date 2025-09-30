@@ -3,17 +3,18 @@ import Header from "./Components/Header";
 import Protected from "./Components/Protected";
 import Contents from "./Pages/Contents";
 import Profile from "./Pages/Profile";
-import Modal from "./Components/Modal";
 import LoginPage from "./Pages/LoginPage";
 import Chatting from "./Pages/Chatting";
 import { useValues } from "./Components/GlobalContexts";
 import Logout from "./Components/Logout";
+import Loading from "./Components/Loader";
+import Profile2 from "./Pages/Profile2";
 
 export default function App() {
    const location = useLocation();
   const hideNavbarPaths = ['/chats'];
   const shouldHideNavbar = hideNavbarPaths.includes(location.pathname);
-  const {theme}=useValues();
+  const {theme,loading}=useValues();
 
   return (
     <div id="app" className="shadow-[0_0_2px] h-dvh flex flex-col overflow-hidden"
@@ -22,10 +23,12 @@ export default function App() {
          <Routes>
             <Route path="/" element={<Protected><Contents/></Protected>}/>
             <Route path="/login" element={<LoginPage/>}/>
-            <Route path="/profile" element={<Profile/>}/>
+            <Route path="/profile" element={<Protected><Profile/></Protected>}/>
+            <Route path="/profile2" element={<Protected><Profile2/></Protected>}/>
             <Route path="/chats" element={<Protected><Chatting/></Protected>}/>
          </Routes>
-      <Modal/><Logout/>
+      <Logout/>
+      {loading && <Loading/>}
     </div>
   )
 }

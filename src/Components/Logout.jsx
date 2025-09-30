@@ -1,11 +1,10 @@
 import { toast } from "react-toastify";
-import { useValues } from "./GlobalContexts";
 import axios from "axios";
 
 export default function Logout() {
-    const { Loader, } = useValues();
 
     function logout() {
+        document.getElementById('logout').hidden=true;
         Loader(true)
         axios.get('/api/logout', { withCredentials: true }).then(data => {
             localStorage.clear();
@@ -13,18 +12,20 @@ export default function Logout() {
         }).catch(e => { toast.error(e.message); }).finally(() => Loader(false))
     }
 
+    function no(){
+        document.getElementById('logout').hidden=true;
+    }
+
     return (
-        <dialog id="logout" className="modal modal-bottom md:modal-middle">
-            <div className="modal-box">
+        <div id="logout" hidden className="absolute backdrop-blur-[2px] top-0 bottom-0 left-0 right-0 flex justify-center items-center">
+            <div className="w-lg anim2 max-w-11/12 flex flex-col gap-3 items-center bg-base-100 shadow-[0_0_1px] p-3 rounded">
                 <h3 className="font-bold text-lg">Confirm</h3>
-                <p className="py-4">Are you sure to logout?</p>
-                <div className="modal-action">
-                    <form method="dialog">
-                        <button className="btn me-2 btn-success" onClick={logout}>Yes</button>
-                        <button className="btn btn-error">No</button>
-                    </form>
+                <p className="">Are you sure to logout?</p>
+                <div className="flex justify-end gap-3">
+                        <button className="btn btn-outline" onClick={logout}>Yes</button>
+                        <button className="btn btn-outline" onClick={no}>No</button>
                 </div>
             </div>
-        </dialog>
+        </div>
     )
 }
