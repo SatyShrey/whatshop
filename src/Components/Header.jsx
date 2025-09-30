@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import ThemeController from "./ThemeController";
 import { useValues } from "./GlobalContexts";
-import { BiUserCircle } from "react-icons/bi";
+import { BiUser, } from "react-icons/bi";
 
 export default function Header() {
   const { settheme, theme, user, } = useValues();
@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <div className='flex items-center justify-between px-1 py-2 bg-primary text-base-100'>
-      <h1 className='font-bold text-2xl'>WhatShop</h1>
+      <h1 className='font-bold text-2xl not-sm:text-xl'>WhatShop</h1>
       <ThemeController settheme={settheme} theme={theme} />
       {user && <div className="rounded-full border overflow-hidden cursor-pointer"
       onClick={() => {
@@ -21,7 +21,7 @@ export default function Header() {
       }}>
         {user.imageUrl
           ? <img src={user.imageUrl} alt="profile-pic" className="w-10" />
-          : <BiUserCircle size={40} className="cursor-pointer" />
+          : <BiUser size={40} className="cursor-pointer" />
         }
       </div>}
     </div>

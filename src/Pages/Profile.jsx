@@ -89,7 +89,7 @@ export default function Profile() {
                 }
                 <input type="file" hidden id="profile" onChange={handleFileChange} />
                 <input type="text" value={name} onChange={(e) => setname(e.target.value)} 
-                className="text-xl font-semibold text-center outline-none border-b" />
+                className="text-xl font-semibold text-center outline-none border-b max-w-full" />
                 {(user.name !== name) &&
                     <div className="flex gap-2">
                         <button className="btn btn-outline" onClick={handleSaveName}>Update</button>
