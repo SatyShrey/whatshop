@@ -28,14 +28,14 @@ export default function Contacts() {
                             filter(f => (f.email.includes(search.toLowerCase()) || f.name.toLowerCase().includes(search.toLowerCase())))
                             .map((obj, index) => (
                                 <div key={index}
-                                    className="rounded-full flex items-center hover:bg-primary/10 my-2">
-                                    <button className="cursor-pointer mx-2 rounded-full border overflow-hidden" onClick={() => {
+                                    className="rounded-full flex gap-2 items-center hover:bg-primary/10 p-1 my-1">
+                                    <button className="cursor-pointer rounded-full border overflow-hidden" onClick={() => {
                                         setuser2(obj);
                                         navigate('/profile2')
                                     }} >
                                         {obj.imageUrl 
                                         ? <img src={obj.imageUrl} alt="profile-pic" className="w-10" /> 
-                                        : <BiUser size={30} /> }
+                                        : <BiUser size={40} /> }
                                     </button>
                                     <p onClick={() => { setuser2(obj); }}
                                         className="h-full flex-1 overflow-x-hidden text-ellipsis not-md:hidden cursor-pointer">{obj.name}</p>
