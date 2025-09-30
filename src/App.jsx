@@ -18,7 +18,7 @@ export default function App() {
 
   return (
     <div id="app" className="shadow-[0_0_2px] h-dvh flex flex-col overflow-hidden"
-     data-theme={theme?"night":"light"}>
+     data-theme={theme?"dark":"light"}>
       {!shouldHideNavbar && <Header/>}
          <Routes>
             <Route path="/" element={<Protected><Contents/></Protected>}/>

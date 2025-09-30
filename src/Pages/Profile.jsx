@@ -73,9 +73,9 @@ export default function Profile() {
     }
 
     return (
-        <div className="flex-1 overflow-y-scroll">
+        <div className="flex-1 overflow-y-scroll bar-0">
             <div className="m-auto mt-5 p-5 shadow-[0_0_1px] rounded flex flex-col gap-3 items-center w-lg max-w-11/12">
-                <label htmlFor="profile" className="rounded-full border border-primary overflow-hidden cursor-pointer">
+                <label htmlFor="profile" className="rounded-full border overflow-hidden cursor-pointer">
                     {(user.imageUrl || preview) ?
                         <img src={preview || user.imageUrl} alt="profile-pic" className="w-28" />
                         : <BiUser size={40} />
@@ -97,7 +97,7 @@ export default function Profile() {
                     </div>
                 }
                 <div className="text-sm">{user.email}</div>
-                <button onClick={logout} className="btn btn-outline">Logout</button>
+                <button onClick={logout} className="btn btn-error">Logout</button>
             </div>
         </div>
     )
