@@ -84,11 +84,11 @@ export default function Chatting() {
           </div>)
       }
       {sendStart &&
-        <div className="flex justify-end">
+        <div className="flex justify-end pe-2">
           <div className="loading loading-dots" />
         </div>
       }
-      <div ref={bottomRef} className="h-3" />
+      <div ref={bottomRef} className="h-1" />
     </div>
 
     <div className="bg-primary">
