@@ -16,8 +16,8 @@ export default function Chatting() {
   }, [])
 
   useEffect(() => {
-    if (user2) {
-      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    if (user2 && bottomRef.current) {
+      bottomRef.current.scrollIntoView();
     }
   }, [user2])
 
