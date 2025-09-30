@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function Chatting() {
-  const { chats, socket, user, setchats, user2, oldChats, onlineUsers, Loader} = useValues();
+  const { chats, socket, user, setchats, user2, oldChats, onlineUsers, sendStart, setsendStart } = useValues();
   const [chat, setchat] = useState('');
   const bottomRef = useRef();
   const navigate = useNavigate();
@@ -13,12 +13,17 @@ export default function Chatting() {
 
   useEffect(() => {
     if (!user2) { return navigate('/') }
-      bottomRef.current.scrollIntoView({ behavior: "smooth" });
   }, [])
+
+  useEffect(() => {
+    if (user2) {
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [user2])
 
   const sendMessage = () => {
     if (!chat) { return toast.error('emty message') }
-    Loader(true)
+    setsendStart(true)
     const newChat = {
       text: chat, receiver: user2.email, sender: user.email,
       time: (new Date()).toLocaleTimeString() + " " + (new Date()).toLocaleDateString()
@@ -78,7 +83,11 @@ export default function Chatting() {
             </div>
           </div>)
       }
-
+      {sendStart &&
+        <div className="flex justify-end">
+          <div className="loading loading-dots" />
+        </div>
+      }
       <div ref={bottomRef} className="h-3" />
     </div>
 

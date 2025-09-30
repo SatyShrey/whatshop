@@ -13,6 +13,7 @@ export function GlobalProvider({ children }) {
   const [oldChats, setoldChats] = useState([]);
   const [user2, setuser2] = useState('')
   const [theme, settheme] = useState(false);
+  const [sendStart, setsendStart] = useState(false)
   const socket = useRef();
   const socketurl = import.meta.env.VITE_SOCKET_URL;
 
@@ -37,7 +38,7 @@ export function GlobalProvider({ children }) {
           socket.current.on('otp_sent', (data) => console.log(data));
           socket.current.on('error', (data) => { Loader(false); });
           socket.current.on('success', (data) => { Loader(false); });
-          socket.current.on('sent', (data) => { Loader(false); });
+          socket.current.on('sent', (data) => { setsendStart(false); });
           socket.current.on('not-sent', (data) => { Loader(false);toast.error(data.toString()) });
           socket.current.on('online', (data) => { setonlineUsers(data) });
           socket.current.on('offline', (data) => { setonlineUsers(data) });
@@ -65,6 +66,7 @@ export function GlobalProvider({ children }) {
     <GlobalContexts.Provider value={{
       chats, setchats, user, setuser, socket, user2, setuser2, users, setusers,
       loading, Loader, oldChats, setoldChats,loadData,theme, settheme,onlineUsers,
+      sendStart, setsendStart
     }}>
       {children}
     </GlobalContexts.Provider>
