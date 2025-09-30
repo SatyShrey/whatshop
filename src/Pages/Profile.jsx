@@ -40,7 +40,7 @@ export default function Profile() {
             const newuser = user;
             newuser.imageUrl = res.data;
             setuser(newuser);
-            toast.success("Profilepic updated");
+            toast.success("Profile pic updated successfully");
             localStorage.setItem('user', JSON.stringify(newuser));
             Loader(false);handleCancelImage();
         } catch (err) {
@@ -68,7 +68,7 @@ export default function Profile() {
             editedUser.name = name;
             localStorage.setItem('user', JSON.stringify(editedUser));
             setuser(editedUser);handleCancelName()
-            toast.success("Name updated")
+            toast.success("Name updated successfully")
         }).catch(err => { toast.error(err.response.data) }).finally(() => Loader(false))
     }
 
