@@ -7,6 +7,7 @@ const signupRoute=require('./routes/signup.cjs');
 const logoutRoute=require('./routes/logout.cjs')
 const updatePicRoute=require('./routes/uploadpic.cjs');
 const updateNameRoute=require('./routes/updatename.cjs')
+const chatsRoute=require('./routes/message.cjs')
 
 const app = express();
 app.use(cookieParser());
@@ -23,6 +24,7 @@ app.use('/api',logoutRoute);
 app.use('/api',signupRoute);
 app.use('/api',updateNameRoute);
 app.use('/api',updatePicRoute);
+app.use('/api',chatsRoute);
 
 
 exports.handler = serverless(app);

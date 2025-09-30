@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createContext, useContext, useEffect, useRef, useState } from "react"
 import { io } from "socket.io-client";
+import { toast } from "react-toastify";
 
 const GlobalContexts = createContext()
 export function GlobalProvider({ children }) {
@@ -19,12 +20,11 @@ export function GlobalProvider({ children }) {
   function loadData() {
     const localuser = localStorage.getItem('user');
     if (localuser) {
-      const old_chats = localStorage.getItem('chats');
-      if (old_chats) { setoldChats(JSON.parse(old_chats)) }
       Loader(true)
       axios.get('/api/start', { withCredentials: true }).then(data => {
         setuser(data.data.user);
         setusers(data.data.users);
+        setoldChats(data.data.messages);
         localStorage.setItem('user', JSON.stringify(data.data.user))
         localStorage.setItem('users', JSON.stringify(data.data.users))
 
@@ -37,6 +37,8 @@ export function GlobalProvider({ children }) {
           socket.current.on('otp_sent', (data) => console.log(data));
           socket.current.on('error', (data) => { Loader(false); });
           socket.current.on('success', (data) => { Loader(false); });
+          socket.current.on('sent', (data) => { Loader(false); });
+          socket.current.on('not-sent', (data) => { Loader(false);toast.error(data.toString()) });
           socket.current.on('online', (data) => { setonlineUsers(data) });
           socket.current.on('offline', (data) => { setonlineUsers(data) });
           socket.current.on('receive_message', (newChat) => {

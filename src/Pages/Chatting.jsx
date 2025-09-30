@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function Chatting() {
-  const { chats, socket, user, setchats, user2, oldChats, onlineUsers, } = useValues();
+  const { chats, socket, user, setchats, user2, oldChats, onlineUsers, Loader} = useValues();
   const [chat, setchat] = useState('');
   const bottomRef = useRef();
   const navigate = useNavigate();
@@ -13,19 +13,18 @@ export default function Chatting() {
 
   useEffect(() => {
     if (!user2) { return navigate('/') }
+      bottomRef.current.scrollIntoView({ behavior: "smooth" });
   }, [])
 
   const sendMessage = () => {
     if (!chat) { return toast.error('emty message') }
+    Loader(true)
     const newChat = {
       text: chat, receiver: user2.email, sender: user.email,
       time: (new Date()).toLocaleTimeString() + " " + (new Date()).toLocaleDateString()
     }
     socket.current.emit('send_message', newChat)
     setchats((prev) => [...prev, newChat]);
-    const localChats = localStorage.getItem('chats')
-    const newLocalChats = localChats ? JSON.parse(localChats) : []
-    localStorage.setItem('chats', JSON.stringify([...newLocalChats, newChat]));
     setchat('');
     setTimeout(() => {
       bottomRef.current.scrollIntoView({ behavior: "smooth" });
@@ -80,7 +79,7 @@ export default function Chatting() {
           </div>)
       }
 
-      <div ref={bottomRef} />
+      <div ref={bottomRef} className="h-3" />
     </div>
 
     <div className="bg-primary">
