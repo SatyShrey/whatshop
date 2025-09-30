@@ -10,7 +10,7 @@ export default function Header() {
   const locate = useLocation();
 
   return (
-    <div className='flex items-center justify-between px-1 py-2 bg-primary text-base-100'>
+    <div className='flex items-center justify-between p-1 bg-primary text-base-100'>
       <h1 className='font-bold text-2xl not-sm:text-xl'>WhatShop</h1>
       <ThemeController settheme={settheme} theme={theme} />
       {user && <div className="rounded-full border overflow-hidden cursor-pointer"

@@ -9,26 +9,33 @@ import { useValues } from "./Components/GlobalContexts";
 import Logout from "./Components/Logout";
 import Loading from "./Components/Loader";
 import Profile2 from "./Pages/Profile2";
+import { useEffect } from "react";
 
 export default function App() {
    const location = useLocation();
-  const hideNavbarPaths = ['/chats'];
-  const shouldHideNavbar = hideNavbarPaths.includes(location.pathname);
-  const {theme,loading}=useValues();
+   const hideNavbarPaths = ['/chats'];
+   const shouldHideNavbar = hideNavbarPaths.includes(location.pathname);
+   const { theme, loading } = useValues();
 
-  return (
-    <div id="app" className="shadow-[0_0_2px] h-dvh flex flex-col overflow-hidden"
-     data-theme={theme?"dark":"light"}>
-      {!shouldHideNavbar && <Header/>}
+   useEffect(() => {
+      window.visualViewport.addEventListener('resize', () => {
+         document.getElementById('app').style.height = `${window.visualViewport.height}px`;
+      });
+   }, [])
+
+   return (
+      <div id="app" className="shadow-[0_0_2px] h-dvh flex flex-col overflow-hidden"
+         data-theme={theme ? "dark" : "light"}>
+         {!shouldHideNavbar && <Header />}
          <Routes>
-            <Route path="/" element={<Protected><Contents/></Protected>}/>
-            <Route path="/login" element={<LoginPage/>}/>
-            <Route path="/profile" element={<Protected><Profile/></Protected>}/>
-            <Route path="/profile2" element={<Protected><Profile2/></Protected>}/>
-            <Route path="/chats" element={<Protected><Chatting/></Protected>}/>
+            <Route path="/" element={<Protected><Contents /></Protected>} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/profile" element={<Protected><Profile /></Protected>} />
+            <Route path="/profile2" element={<Protected><Profile2 /></Protected>} />
+            <Route path="/chats" element={<Protected><Chatting /></Protected>} />
          </Routes>
-      <Logout/>
-      {loading && <Loading/>}
-    </div>
-  )
+         <Logout />
+         {loading && <Loading />}
+      </div>
+   )
 }
