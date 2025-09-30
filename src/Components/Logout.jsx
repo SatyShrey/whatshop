@@ -4,7 +4,7 @@ import axios from "axios";
 export default function Logout() {
 
     function logout() {
-        document.getElementById('logout').hidden=true;
+        document.getElementById('logout').hidden = true;
         Loader(true)
         axios.get('/api/logout', { withCredentials: true }).then(data => {
             localStorage.clear();
@@ -12,8 +12,8 @@ export default function Logout() {
         }).catch(e => { toast.error(e.message); }).finally(() => Loader(false))
     }
 
-    function no(){
-        document.getElementById('logout').hidden=true;
+    function no() {
+        document.getElementById('logout').hidden = true;
     }
 
     return (
@@ -21,9 +21,9 @@ export default function Logout() {
             <div className="w-lg anim2 max-w-11/12 flex flex-col gap-3 items-center bg-base-100 shadow-[0_0_1px] p-3 rounded">
                 <h3 className="font-bold text-lg">Confirm</h3>
                 <p className="">Are you sure to logout?</p>
-                <div className="flex justify-end gap-3">
-                        <button className="btn btn-outline" onClick={logout}>Yes</button>
-                        <button className="btn btn-outline" onClick={no}>No</button>
+                <div className="flex gap-3 mt-5">
+                    <button className="btn btn-soft" onClick={no}>Cancel</button>
+                    <button className="btn btn-error" onClick={logout}>Logout</button>
                 </div>
             </div>
         </div>
