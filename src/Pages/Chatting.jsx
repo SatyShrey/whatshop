@@ -50,7 +50,7 @@ export default function Chatting() {
     <div className="flex gap-2 p-2 bg-primary text-base-100 items-center">
       <BiArrowBack size={40} onClick={() => navigate('/')} className="md:hidden"/>
       <button className="cursor-pointer mx-2 rounded-full border overflow-hidden" onClick={() => {
-        navigate('/profile2')
+        navigate(-1)
       }} >
         {user2.imageUrl
           ? <img src={user2.imageUrl} alt="profile-pic" className="w-10" />

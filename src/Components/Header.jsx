@@ -17,7 +17,7 @@ export default function Header() {
       {user && <div className="rounded-full border overflow-hidden cursor-pointer"
         onClick={() => {
           const path = locate.pathname
-          if (path.includes('profile')) { navigate('/') }
+          if (path.includes('profile')) { navigate(-1) }
           else { navigate('/profile') }
         }}>
         {user.imageUrl
