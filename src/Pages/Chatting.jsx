@@ -68,9 +68,9 @@ export default function Chatting() {
       {oldChats && //past messages
         Messages(chats,oldChats).map((chat, index) =>
           <div key={index} className={user.email === chat.sender ? "chat chat-end" : "chat chat-start"}>
-            <div className="chat-bubble">
+            <div className={`chat-bubble ${user.email === chat.sender && ''}`}>
               <pre className="whitespace-pre-wrap wrap-anywhere">{chat.text}</pre>
-              <div className={`text-[10px] mt-2 text-base-content/60 ${user.email === chat.sender && 'text-right'}`}>{chat.time}</div>
+              <div className={`text-[10px] mt-2 text-base-content/50 ${user.email === chat.sender && 'text-right'}`}>{chat.time}</div>
             </div>
           </div>)
       }

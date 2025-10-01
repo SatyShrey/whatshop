@@ -20,7 +20,7 @@ export default function App() {
    }, [])
 
    return (
-      <div id="app" className="shadow-[0_0_2px] h-dvh flex flex-col overflow-hidden"
+      <div id="app" className="duration-300 shadow-[0_0_2px] h-dvh flex flex-col overflow-hidden"
          data-theme={theme ? "dark" : "light"}>
          <Header />
          <Routes>
