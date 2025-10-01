@@ -25,7 +25,7 @@ export function GlobalProvider({ children }) {
       axios.get('/api/start', { withCredentials: true }).then(data => {
         setuser(data.data.user);
         setusers(data.data.users);
-        setoldChats(data.data.messages);
+        setoldChats(data.data.messages);//console.log(data.data.messages)
         localStorage.setItem('user', JSON.stringify(data.data.user))
         localStorage.setItem('users', JSON.stringify(data.data.users))
 

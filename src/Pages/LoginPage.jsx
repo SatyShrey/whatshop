@@ -39,8 +39,8 @@ export default function Login() {
     }
 
     return (
-        <div style={{scrollbarWidth:"none"}} className='flex-1 overflow-scroll flex p-2 justify-center items-center'>
-            <div className="shadow-[0_0_2px] rounded flex flex-col p-2 gap-3 justify-between min-h-fit w-[340px] max-w-full m-auto">
+        <div className='flex-1 overflow-scroll bar-0 p-2 flex items-center justify-center'>
+            <div className="shadow-[0_0_2px] rounded flex-col flex gap-4 p-2 items-center w-80">
                 <h1 className="text-center font-bold text-xl">Login</h1>
                 {isOtp
                     ? <>
@@ -57,7 +57,7 @@ export default function Login() {
                         <input type="email" placeholder="Email" className="input"
                             value={email} onChange={(e) => setemail(e.target.value)} />
 
-                        <button className='btn btn-primary' onClick={handleSendOTP}>Send OTP</button>
+                        <button className='btn btn-primary btn-block' onClick={handleSendOTP}>Send OTP</button>
                     </>
                 }
             </div>

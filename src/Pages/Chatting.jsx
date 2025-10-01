@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react"
-import { BiArrowBack, BiSolidSend, BiUser } from "react-icons/bi"
+import { BiArrowBack, BiSolidChat, BiSolidSend, BiUser } from "react-icons/bi"
 import { useValues } from "../Components/GlobalContexts";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 export default function Chatting() {
@@ -9,11 +9,6 @@ export default function Chatting() {
   const [chat, setchat] = useState('');
   const bottomRef = useRef();
   const navigate = useNavigate();
-  const locate = useLocation();
-
-  useEffect(() => {
-    if (!user2) { return navigate('/') }
-  }, [])
 
   useEffect(() => {
     if (user2 && bottomRef.current) {
@@ -37,17 +32,23 @@ export default function Chatting() {
   }
 
   //function for display filtered messages
-  function Messages(array) {
-    const filteredArray = array.filter(f =>
+  function Messages(newArray=[],oldArray=[]) {
+    const newFilteredArray = newArray.filter(f =>
       (f.sender === user.email && f.receiver === user2.email)
       || (f.sender === user2.email && f.receiver === user.email))
 
-    return filteredArray;
+      const oldFilteredArray = oldArray.filter(f =>
+      (f.sender === user.email && f.receiver === user2.email)
+      || (f.sender === user2.email && f.receiver === user.email))
+    
+      const collection=oldFilteredArray.concat(newFilteredArray);
+      return collection;
   }
 
-  return user2 && <>
+  return user2 ?
+   <>
     <div className="flex gap-2 p-2 bg-primary text-base-100 items-center">
-      {locate.pathname.includes('chats') && <BiArrowBack size={30} onClick={() => navigate('/')} />}
+      <BiArrowBack size={40} onClick={() => navigate('/')} className="md:hidden"/>
       <button className="cursor-pointer mx-2 rounded-full border overflow-hidden" onClick={() => {
         navigate('/profile2')
       }} >
@@ -65,26 +66,17 @@ export default function Chatting() {
     </div>
     <div style={{ scrollbarWidth: "none" }} className="h-full overflow-y-scroll">
       {oldChats && //past messages
-        Messages(oldChats).map((chat, index) =>
+        Messages(chats,oldChats).map((chat, index) =>
           <div key={index} className={user.email === chat.sender ? "chat chat-end" : "chat chat-start"}>
             <div className="chat-bubble">
               <pre className="whitespace-pre-wrap wrap-anywhere">{chat.text}</pre>
-              <div className={`text-[10px] text-accent ${user.email === chat.sender ? 'text-right' : ''}`}>{chat.time}</div>
+              <div className={`text-[10px] ${user.email === chat.sender ? 'text-right' : ''}`}>{chat.time}</div>
             </div>
           </div>)
       }
 
-      {chats && //new messages
-        Messages(chats).map((chat, index) =>
-          <div key={index} className={user.email === chat.sender ? "chat chat-end" : "chat chat-start"}>
-            <div className="chat-bubble">
-              <pre className="whitespace-pre-wrap wrap-anywhere">{chat.text}</pre>
-              <div className={`text-[10px] text-accent ${user.email === chat.sender ? 'text-right' : ''}`}>{chat.time}</div>
-            </div>
-          </div>)
-      }
       {sendStart &&
-        <div className="flex justify-end pe-2">
+        <div className="flex justify-end pe-3">
           <div className="loading loading-dots" />
         </div>
       }
@@ -92,10 +84,14 @@ export default function Chatting() {
     </div>
 
     <div className="bg-primary">
-      <div className="flex bg-base-200 items-center p-2 rounded-2xl m-1 shadow-[0_0_2px]">
+      <div className="flex bg-base-200 items-center p-2 rounded-2xl m-1">
         <textarea placeholder="Write message..." name="messagebox" className="flex-1 h-14 resize-none outline-none p-1 placeholder:text-gray-400" onChange={(e) => setchat(e.target.value)} value={chat}></textarea>
         {chat && <button onClick={sendMessage}><BiSolidSend size={30} /></button>}
       </div>
     </div>
-  </>
+  </>: 
+  <div className="flex-1 flex justify-center items-center flex-col">
+    <BiSolidChat size={60}/>
+    Start conversations
+  </div>
 }

@@ -17,7 +17,7 @@ app.get("/start", async (req, res) => {
     const decoded = jwt.verify(token, secret);
     await mongoose.connect(mongodb_url)
     const usersdata = await User.find({});
-    const messages= await Message.find({})
+    const messages= await Message.find({$or:[{receiver:decoded.email},{sender:decoded.email}]});
     const users = usersdata.filter(f => f.email !== decoded.email).map(a => ({ name: a.name, email: a.email,imageUrl:a.imageUrl }))
     const userdata = usersdata.find(a => a.email === decoded.email);
     const user = { email: userdata.email, name: userdata.name,imageUrl:userdata.imageUrl };
