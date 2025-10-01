@@ -48,13 +48,13 @@ export default function Chatting() {
   return user2 ?
    <>
     <div className="flex gap-2 p-2 bg-primary text-base-100 items-center">
-      <BiArrowBack size={40} onClick={() => navigate('/')} className="md:hidden"/>
+      <BiArrowBack size={30} onClick={() => navigate('/')} className="md:hidden"/>
       <button className="cursor-pointer mx-2 rounded-full border overflow-hidden" onClick={() => {
         navigate(-1)
       }} >
         {user2.imageUrl
           ? <img src={user2.imageUrl} alt="profile-pic" className="w-10" />
-          : <BiUser size={30} />}
+          : <BiUser size={40} />}
       </button>
       <p className="flex-1 overflow-x-hidden text-ellipsis">
         <span className="whitespace-nowrap">{user2.name}</span>
